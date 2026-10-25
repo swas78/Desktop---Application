@@ -1,0 +1,10 @@
+{
+  "fullName": "Rahul Kumar Sharma",
+  "fatherName": "Mohan Sharma",
+  "dob": "1999-05-14",
+  "qualification": {
+    "percentage": 74.2,
+    "branch": "ECE",
+    "degree": "BTech"
+  }
+}

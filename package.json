@@ -1,0 +1,14 @@
+{
+  "name": "advs-root",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Automated Document Verification System (RAC, DRDO)",
+  "scripts": {
+    "start": "./run.sh",
+    "dev": "./run.sh",
+    "build": "npm --prefix packages/shared-types run build && npm --prefix apps/desktop run build",
+    "dist:dmg": "npm --prefix packages/shared-types run build && npm --prefix apps/desktop run dist:dmg",
+    "package": "npm run dist:dmg",
+    "test": "PYTHONPATH=. engine/.venv/bin/pytest engine/tests && PYTHONPATH=. engine/.venv/bin/python tools/benchmark.py && PYTHONPATH=. engine/.venv/bin/python tools/evaluate.py"
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "name": "advs-desktop",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ADVS Desktop Shell (Electron + React)",
+  "main": "dist-electron/main.js",
+  "scripts": {
+    "dev": "vite",
+    "build:engine": "PYTHONPATH=../.. ../../engine/.venv/bin/pyinstaller --name advs-engine --onedir --clean --noconfirm --paths ../.. --collect-all engine --add-binary \"/Library/Frameworks/Python.framework/Versions/3.14/lib/libcrypto.3.dylib:.\" --add-binary \"/Library/Frameworks/Python.framework/Versions/3.14/lib/libssl.3.dylib:.\" ../../engine/run_standalone.py --distpath ../../engine/dist --workpath ../../engine/build",
+    "build:react": "tsc && vite build",
+    "build:electron": "tsc -p tsconfig.electron.json",
+    "build": "npm run build:react && npm run build:electron",
+    "dist:dmg": "npm run build:engine && npm run build && electron-builder --mac dmg --arm64",
+    "dist": "npm run build && electron-builder",
+    "preview": "vite preview"
+  },
+  "build": {
+    "appId": "in.gov.drdo.rac.advs",
+    "productName": "ADVS",
+    "directories": {
+      "output": "release"
+    },
+    "mac": {
+      "category": "public.app-category.utilities",
+      "identity": null,
+      "target": [
+        {
+          "target": "dmg",
+          "arch": ["arm64"]
+        }
+      ]
+    },
+    "dmg": {
+      "title": "ADVS - DRDO RAC Document Verification"
+    },
+    "files": [
+      "dist/**/*",
+      "dist-electron/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "../../engine/dist/advs-engine",
+        "to": "engine/advs-engine",
+        "filter": ["**/*"]
+      }
+    ]
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.16.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.5",
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.2",
+    "electron": "^33.0.1",
+    "electron-builder": "^26.18.0",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.9"
+  }
+}
